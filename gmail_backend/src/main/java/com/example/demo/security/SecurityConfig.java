@@ -76,12 +76,23 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-        // Allow local frontend
-        config.setAllowedOrigins(List.of("http://localhost:3000"));
+
+        // Read allowed origins from env or application.properties (spring.web.cors.allowed-origins)
+        // Fall back to localhost:3000 for development
+        String envOrigins = System.getenv().getOrDefault("CORS_ALLOWED_ORIGINS", "");
+        if (envOrigins != null && !envOrigins.isBlank()) {
+            config.setAllowedOrigins(List.of(envOrigins.split("\\s*,\\s*")));
+        } else {
+            // Spring Boot property fallback (resolved at runtime by WebMvc, but we set here too)
+            config.setAllowedOrigins(List.of("http://localhost:3000"));
+        }
+
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
+
         // Expose Content-Disposition so frontend can read filename for downloads
         config.setExposedHeaders(List.of("Content-Disposition"));
+
         config.setAllowCredentials(true);
         config.setMaxAge(3600L);
 

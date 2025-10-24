@@ -95,11 +95,19 @@ All endpoints require Authorization: Bearer <token>.
   Returns list of attachments for the email.
 
 CORS: Content-Disposition header is exposed for download filename access.
+- Allowed origin (dev): http://localhost:3000
+- Allowed methods: GET, POST, PUT, PATCH, DELETE, OPTIONS
+- Allowed headers: *
+- Exposed headers: Content-Disposition
+Configured via a global CorsFilter and SecurityConfig.corsConfigurationSource().
 
 Env:
 - FILE_STORAGE_DIR sets the root directory for file storage; defaults to ./attachments
 
 ### Environment
 - Configure DB via environment variables (DB_HOST, DB_PORT, DB_NAME, DB_USER, DB_PASSWORD)
-- Configure JWT via JWT_SECRET (32+ chars recommended) and optional JWT_EXP (seconds)
+  Defaults (dev): DB_HOST=localhost, DB_PORT=5001, DB_NAME=gmail, DB_USER=postgres, DB_PASSWORD=postgres
+- SERVER_PORT can be set via server.port (default 3001)
+- JWT: configure via JWT_SECRET (32+ chars recommended) and optional JWT_EXP (seconds)
+- CORS_ALLOWED_ORIGINS can be customized via spring.web.cors.allowed-origins; defaults include http://localhost:3000 for dev
 See gmail_backend/.env.example for a sample.

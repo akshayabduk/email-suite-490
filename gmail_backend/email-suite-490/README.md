@@ -78,6 +78,27 @@ List emails by label:
 Swagger UI: /swagger-ui.html  
 OpenAPI JSON: /api-docs
 
+## Attachment APIs
+
+All endpoints require Authorization: Bearer <token>.
+
+- POST /api/v1/attachments/upload (multipart/form-data)
+  fields:
+    - emailId: number
+    - files: one or more file parts (files)
+  Response: [ { id, emailId, filename, contentType, size, createdAt } ]
+
+- GET /api/v1/attachments/{id}/download
+  Returns the file with Content-Disposition header.
+
+- GET /api/v1/attachments/email/{emailId}
+  Returns list of attachments for the email.
+
+CORS: Content-Disposition header is exposed for download filename access.
+
+Env:
+- FILE_STORAGE_DIR sets the root directory for file storage; defaults to ./attachments
+
 ### Environment
 - Configure DB via environment variables (DB_HOST, DB_PORT, DB_NAME, DB_USER, DB_PASSWORD)
 - Configure JWT via JWT_SECRET (32+ chars recommended) and optional JWT_EXP (seconds)

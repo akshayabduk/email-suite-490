@@ -24,6 +24,37 @@ Base URL: http://localhost:3001
   Headers:
   Authorization: Bearer <token>
 
+## Email APIs
+
+All endpoints require Authorization: Bearer <token>.
+
+- GET /api/v1/emails/inbox?page=0&size=20  
+- GET /api/v1/emails/sent?page=0&size=20  
+- GET /api/v1/emails/drafts?page=0&size=20  
+- GET /api/v1/emails/trash?page=0&size=20  
+- GET /api/v1/emails/archived?page=0&size=20  
+- GET /api/v1/emails/{id}  
+- GET /api/v1/emails/search?q=hello&page=0&size=20  
+- POST /api/v1/emails/compose  
+  {
+    "to": "recipient@example.com",
+    "cc": "",
+    "bcc": "",
+    "subject": "Hello",
+    "bodyHtml": "<p>Hi</p>",
+    "bodyText": "Hi",
+    "threadId": "optional-thread-id"
+  }
+- POST /api/v1/emails/draft  
+  body like compose; saves draft
+- PATCH /api/v1/emails/{id}/flags  
+  {
+    "read": true,
+    "starred": true,
+    "archived": false,
+    "deleted": false
+  }
+
 Swagger UI: /swagger-ui.html  
 OpenAPI JSON: /api-docs
 

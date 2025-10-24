@@ -2,6 +2,12 @@
 
 This is the initial README file for the project.
 
+Backend now supports user labels with CRUD and email assignment:
+- CRUD under /api/v1/labels
+- Assign/unassign labels to emails
+- List emails by label
+See gmail_backend/email-suite-490/README.md for details.
+
 ## Backend Auth (gmail_backend)
 
 Base URL: http://localhost:3001
@@ -54,6 +60,20 @@ All endpoints require Authorization: Bearer <token>.
     "archived": false,
     "deleted": false
   }
+
+## Label APIs
+
+- GET /api/v1/labels?page=0&size=50 — List labels for current user
+- POST /api/v1/labels — Create label { "name": "Work", "color": "#2563EB" }
+- PATCH /api/v1/labels/{id} — Update label { "name": "Personal", "color": "#F59E0B" }
+- DELETE /api/v1/labels/{id} — Delete label
+
+Assignments:
+- POST /api/v1/labels/emails/{emailId}/assign — { "labelIds": [1,2] }
+- POST /api/v1/labels/emails/{emailId}/unassign — { "labelIds": [1] }
+
+List emails by label:
+- GET /api/v1/labels/{labelId}/emails?page=0&size=20
 
 Swagger UI: /swagger-ui.html  
 OpenAPI JSON: /api-docs

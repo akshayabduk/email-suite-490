@@ -13,6 +13,7 @@ import java.util.List;
  * PUBLIC_INTERFACE
  * Main Spring Boot application entry point for the gmail backend.
  * Runs on server.port configured in application.properties.
+ * Swagger UI served at /swagger-ui.html and OpenAPI JSON at /api-docs by springdoc.
  */
 @SpringBootApplication
 public class GmailbackendApplication {
